@@ -8,29 +8,29 @@ import {Portal} from '@angular/cdk/portal';
 })
 export class NgxDialogLibService {
 
-  _overlayRef: OverlayRef;
+  overlayRefInstance: OverlayRef;
   backdropClickSubscription: Subscription | null = null;
 
   set overlayRef(overlayRef: OverlayRef) {
-    this._overlayRef = overlayRef;
+    this.overlayRefInstance = overlayRef;
     if (this.backdropClickSubscription !== null) {
       this.backdropClickSubscription.unsubscribe();
     }
-    this.backdropClickSubscription = this._overlayRef.backdropClick().subscribe(this.hide.bind(this));
+    this.backdropClickSubscription = this.overlayRefInstance.backdropClick().subscribe(this.hide.bind(this));
   }
 
   get overlayRef() {
-    return this._overlayRef;
+    return this.overlayRefInstance;
   }
 
   show(portal: Portal<any>) {
     this.checkIsOverlayRefExists();
-    this._overlayRef.attach(portal);
+    this.overlayRefInstance.attach(portal);
   }
 
   hide() {
     this.checkIsOverlayRefExists();
-    this._overlayRef.detach();
+    this.overlayRefInstance.detach();
   }
 
   private checkIsOverlayRefExists() {

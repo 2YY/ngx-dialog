@@ -1,11 +1,22 @@
 <ng-container>
-  <button class="btn-show-dialog" mat-button color="primary" (click)="dialogService.show(createTemplatePortal(dialogHelloRef))">Show Dialog</button>
+	<button
+		class="btn-show-dialog"
+		mat-button
+		color="primary"
+		(click)="dialogService.show(createTemplatePortal(dialogHelloRef))"
+	>
+		Show Dialog
+	</button>
 
-  <ng-template #dialogHello>
-    <section class="dialog-hello">
-      <h1 class="dialog-hello__hdg">Hello World</h1>
-      <p class="dialog-hello__description">This is dialog shown by NgxDialogLibService.</p>
-      <button class="dialog-hello__btn-close" mat-icon-button (click)="dialogService.hide()"><mat-icon aria-hidden="false" aria-label="Close dialog">close</mat-icon></button>
-    </section>
-  </ng-template>
+	<ng-template #dialogHello>
+		<section class="dialog-hello">
+			<h1 class="dialog-hello__hdg">Hello World</h1>
+			<p class="dialog-hello__description">
+				This is dialog shown by NgxDialogLibService.
+			</p>
+			<button class="dialog-hello__btn-close" mat-icon-button (click)="dialogService.hide()">
+				<mat-icon aria-hidden="false" aria-label="Close dialog">close</mat-icon>
+			</button>
+		</section>
+	</ng-template>
 </ng-container>
