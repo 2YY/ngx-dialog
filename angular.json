@@ -124,6 +124,41 @@
           }
         }
       }
+    },
+    "ngx-dialog-lib": {
+      "projectType": "library",
+      "root": "projects/ngx-dialog-lib",
+      "sourceRoot": "projects/ngx-dialog-lib/src",
+      "prefix": "lib",
+      "architect": {
+        "build": {
+          "builder": "@angular-devkit/build-ng-packagr:build",
+          "options": {
+            "tsConfig": "projects/ngx-dialog-lib/tsconfig.lib.json",
+            "project": "projects/ngx-dialog-lib/ng-package.json"
+          }
+        },
+        "test": {
+          "builder": "@angular-devkit/build-angular:karma",
+          "options": {
+            "main": "projects/ngx-dialog-lib/src/test.ts",
+            "tsConfig": "projects/ngx-dialog-lib/tsconfig.spec.json",
+            "karmaConfig": "projects/ngx-dialog-lib/karma.conf.js"
+          }
+        },
+        "lint": {
+          "builder": "@angular-devkit/build-angular:tslint",
+          "options": {
+            "tsConfig": [
+              "projects/ngx-dialog-lib/tsconfig.lib.json",
+              "projects/ngx-dialog-lib/tsconfig.spec.json"
+            ],
+            "exclude": [
+              "**/node_modules/**"
+            ]
+          }
+        }
+      }
     }},
   "defaultProject": "ngx-dialog"
 }
