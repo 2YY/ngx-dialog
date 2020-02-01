@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 
 @Component({
-  selector: 'lib-ngx-dialog-lib',
+  selector: 'ngx-dialog',
   template: `
     <p>
       ngx-dialog-lib works!
