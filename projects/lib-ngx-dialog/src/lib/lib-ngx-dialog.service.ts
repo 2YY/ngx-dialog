@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import {OverlayConfig, OverlayRef} from '@angular/cdk/overlay';
+import {OverlayRef} from '@angular/cdk/overlay';
 import {Subscription} from 'rxjs';
 import {Portal} from '@angular/cdk/portal';
 
