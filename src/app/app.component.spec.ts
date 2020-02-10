@@ -1,5 +1,6 @@
 import { TestBed, async } from '@angular/core/testing';
 import { AppComponent } from './app.component';
+import {OverlayModule} from '@angular/cdk/overlay';
 
 describe('AppComponent', () => {
 
@@ -8,6 +9,9 @@ describe('AppComponent', () => {
       declarations: [
         AppComponent
       ],
+      imports: [
+        OverlayModule
+      ]
     }).compileComponents();
   }));
 
