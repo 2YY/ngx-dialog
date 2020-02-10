@@ -34,7 +34,7 @@ export class LibNgxDialogService {
   }
 
   private checkIsOverlayRefExists() {
-    if (!this._overlayRef) {
+    if (!this.overlayRefInstance) {
       throw Error('[LibNgxDialogService] OverlayRef not registered. Please register by using overlayRef setter.');
     }
   }
