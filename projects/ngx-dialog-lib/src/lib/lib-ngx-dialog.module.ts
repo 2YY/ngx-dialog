@@ -1,16 +1,16 @@
 import { NgModule } from '@angular/core';
-import { NgxDialogLibComponent } from './ngx-dialog-lib.component';
+import { LibNgxDialogComponent } from './lib-ngx-dialog.component';
 import {OverlayModule} from '@angular/cdk/overlay';
 import {PortalModule} from '@angular/cdk/portal';
 
 
 
 @NgModule({
-  declarations: [NgxDialogLibComponent],
+  declarations: [LibNgxDialogComponent],
   imports: [
     OverlayModule,
     PortalModule
   ],
-  exports: [NgxDialogLibComponent]
+  exports: [LibNgxDialogComponent]
 })
-export class NgxDialogLibModule { }
+export class LibNgxDialogModule { }

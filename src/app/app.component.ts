@@ -1,5 +1,5 @@
 import {Component, OnInit, TemplateRef, ViewChild, ViewContainerRef} from '@angular/core';
-import {NgxDialogLibService} from '../../projects/ngx-dialog-lib/src/lib/ngx-dialog-lib.service';
+import {LibNgxDialogService} from '../../projects/ngx-dialog-lib/src/lib/lib-ngx-dialog.service';
 import {Overlay} from '@angular/cdk/overlay';
 import {TemplatePortal} from '@angular/cdk/portal';
 
@@ -12,7 +12,7 @@ export class AppComponent implements OnInit {
 
   @ViewChild('dialogHello') dialogHelloRef: TemplateRef<any>;
 
-  constructor(private overlay: Overlay, public viewContainerRef: ViewContainerRef, public dialogService: NgxDialogLibService) {}
+  constructor(private overlay: Overlay, public viewContainerRef: ViewContainerRef, public dialogService: LibNgxDialogService) {}
 
   ngOnInit() {
     this.dialogService.overlayRef = this.overlay.create({

@@ -1,20 +1,20 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { NgxDialogLibComponent } from './ngx-dialog-lib.component';
+import { LibNgxDialogComponent } from './lib-ngx-dialog.component';
 
 describe('NgxDialogLibComponent', () => {
-  let component: NgxDialogLibComponent;
-  let fixture: ComponentFixture<NgxDialogLibComponent>;
+  let component: LibNgxDialogComponent;
+  let fixture: ComponentFixture<LibNgxDialogComponent>;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ NgxDialogLibComponent ]
+      declarations: [ LibNgxDialogComponent ]
     })
     .compileComponents();
   }));
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(NgxDialogLibComponent);
+    fixture = TestBed.createComponent(LibNgxDialogComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

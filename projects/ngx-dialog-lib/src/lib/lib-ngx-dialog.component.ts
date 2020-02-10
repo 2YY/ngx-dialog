@@ -9,7 +9,7 @@ import { Component, OnInit } from '@angular/core';
   `,
   styles: []
 })
-export class NgxDialogLibComponent implements OnInit {
+export class LibNgxDialogComponent implements OnInit {
 
   constructor() { }
 

@@ -1,12 +1,12 @@
 import { TestBed } from '@angular/core/testing';
 
-import { NgxDialogLibService } from './ngx-dialog-lib.service';
+import { LibNgxDialogService } from './lib-ngx-dialog.service';
 
 describe('NgxDialogLibService', () => {
   beforeEach(() => TestBed.configureTestingModule({}));
 
   it('should be created', () => {
-    const service: NgxDialogLibService = TestBed.get(NgxDialogLibService);
+    const service: LibNgxDialogService = TestBed.get(LibNgxDialogService);
     expect(service).toBeTruthy();
   });
 });

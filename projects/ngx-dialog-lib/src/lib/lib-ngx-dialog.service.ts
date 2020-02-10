@@ -6,7 +6,7 @@ import {Portal} from '@angular/cdk/portal';
 @Injectable({
   providedIn: 'root'
 })
-export class NgxDialogLibService {
+export class LibNgxDialogService {
 
   overlayRefInstance: OverlayRef;
   backdropClickSubscription: Subscription | null = null;
@@ -35,7 +35,7 @@ export class NgxDialogLibService {
 
   private checkIsOverlayRefExists() {
     if (!this._overlayRef) {
-      throw Error('[NgxDialogLibService] OverlayRef not registered. Please register by using overlayRef setter.');
+      throw Error('[LibNgxDialogService] OverlayRef not registered. Please register by using overlayRef setter.');
     }
   }
 

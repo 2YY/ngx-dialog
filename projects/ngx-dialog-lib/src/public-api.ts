@@ -1,7 +1,7 @@
 /*
- * Public API Surface of ngx-dialog-lib
+ * Public API Surface of lib-ngx-dialog
  */
 
-export * from './lib/ngx-dialog-lib.service';
-export * from './lib/ngx-dialog-lib.component';
-export * from './lib/ngx-dialog-lib.module';
+export * from './lib/lib-ngx-dialog.service';
+export * from './lib/lib-ngx-dialog.component';
+export * from './lib/lib-ngx-dialog.module';
