@@ -3,7 +3,6 @@ import { NgModule } from '@angular/core';
 
 import { AppComponent } from './app.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import {LibNgxDialogModule} from '../../projects/ngx-dialog-lib/src/lib/lib-ngx-dialog.module';
 import {OverlayModule} from '@angular/cdk/overlay';
 import {MatButtonModule} from '@angular/material/button';
 import {MatIconModule} from '@angular/material/icon';
@@ -15,8 +14,7 @@ import {MatIconModule} from '@angular/material/icon';
     BrowserAnimationsModule,
     MatButtonModule,
     MatIconModule,
-    OverlayModule,
-    LibNgxDialogModule
+    OverlayModule
   ],
   providers: [],
   bootstrap: [AppComponent]
