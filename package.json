@@ -67,7 +67,7 @@
     }
   },
   "lint-staged": {
-    "projects/ngx-dialog-lib/src/lib/**/*.ts": "tslint",
+    "projects/lib-ngx-dialog/src/lib/**/*.ts": "tslint",
     "*.html": "npm run lint:html",
     "*.scss": "npm run lint:scss"
   }

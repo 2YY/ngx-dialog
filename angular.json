@@ -124,38 +124,38 @@
         }
       }
     },
-    "ngx-dialog-lib": {
+    "lib-ngx-dialog": {
       "projectType": "library",
-      "root": "projects/ngx-dialog-lib",
-      "sourceRoot": "projects/ngx-dialog-lib/src",
+      "root": "projects/lib-ngx-dialog",
+      "sourceRoot": "projects/lib-ngx-dialog/src",
       "prefix": "lib",
       "architect": {
         "build": {
           "builder": "@angular-devkit/build-ng-packagr:build",
           "options": {
-            "tsConfig": "projects/ngx-dialog-lib/tsconfig.lib.json",
-            "project": "projects/ngx-dialog-lib/ng-package.json"
+            "tsConfig": "projects/lib-ngx-dialog/tsconfig.lib.json",
+            "project": "projects/lib-ngx-dialog/ng-package.json"
           }
         ,          "configurations": {
             "production": {
-              "tsConfig": "projects/ngx-dialog-lib/tsconfig.lib.prod.json"
+              "tsConfig": "projects/lib-ngx-dialog/tsconfig.lib.prod.json"
             }
           }
 },
         "test": {
           "builder": "@angular-devkit/build-angular:karma",
           "options": {
-            "main": "projects/ngx-dialog-lib/src/test.ts",
-            "tsConfig": "projects/ngx-dialog-lib/tsconfig.spec.json",
-            "karmaConfig": "projects/ngx-dialog-lib/karma.conf.js"
+            "main": "projects/lib-ngx-dialog/src/test.ts",
+            "tsConfig": "projects/lib-ngx-dialog/tsconfig.spec.json",
+            "karmaConfig": "projects/lib-ngx-dialog/karma.conf.js"
           }
         },
         "lint": {
           "builder": "@angular-devkit/build-angular:tslint",
           "options": {
             "tsConfig": [
-              "projects/ngx-dialog-lib/tsconfig.lib.json",
-              "projects/ngx-dialog-lib/tsconfig.spec.json"
+              "projects/lib-ngx-dialog/tsconfig.lib.json",
+              "projects/lib-ngx-dialog/tsconfig.spec.json"
             ],
             "exclude": [
               "**/node_modules/**"

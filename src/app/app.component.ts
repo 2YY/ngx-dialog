@@ -1,5 +1,5 @@
 import {Component, OnInit, TemplateRef, ViewChild, ViewContainerRef} from '@angular/core';
-import {LibNgxDialogService} from '../../projects/ngx-dialog-lib/src/lib/lib-ngx-dialog.service';
+import {LibNgxDialogService} from '../../projects/lib-ngx-dialog/src/lib/lib-ngx-dialog.service';
 import {Overlay} from '@angular/cdk/overlay';
 import {TemplatePortal} from '@angular/cdk/portal';
 

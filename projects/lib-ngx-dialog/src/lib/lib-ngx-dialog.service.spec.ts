@@ -2,7 +2,7 @@ import { TestBed } from '@angular/core/testing';
 
 import { LibNgxDialogService } from './lib-ngx-dialog.service';
 
-describe('NgxDialogLibService', () => {
+describe('LibNgxDialogService', () => {
   beforeEach(() => TestBed.configureTestingModule({}));
 
   it('should be created', () => {

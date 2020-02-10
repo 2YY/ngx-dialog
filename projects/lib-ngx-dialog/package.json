@@ -1,5 +1,5 @@
 {
-  "name": "ngx-dialog-lib",
+  "name": "lib-ngx-dialog",
   "version": "0.0.1",
   "peerDependencies": {
     "@angular/common": "^8.2.14",
