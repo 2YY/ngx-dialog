@@ -10,7 +10,7 @@ import {TemplatePortal} from '@angular/cdk/portal';
 })
 export class AppComponent implements OnInit {
 
-  @ViewChild('dialogHello', {static: false}) dialogHelloRef: TemplateRef<any>;
+  @ViewChild('dialogHello') dialogHelloRef: TemplateRef<any>;
 
   constructor(private overlay: Overlay, public viewContainerRef: ViewContainerRef, public dialogService: NgxDialogLibService) {}
 
