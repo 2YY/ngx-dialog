@@ -1,5 +1,7 @@
 # NgxDialog
 
+![CI](https://github.com/2YY/ngx-dialog/workflows/CI/badge.svg)
+
 This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 8.3.24.
 
 ## Development server
