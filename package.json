@@ -4,7 +4,7 @@
   "scripts": {
     "ng": "ng",
     "start": "ng serve",
-    "build": "ng build --output-path=./dist/ngx-dialog --base-href=/ngx-dialog/",
+    "build": "ng build --base-href=/ngx-dialog/",
     "test": "ng test",
     "lint": "run-p lint:*",
     "lint:html": "prettier 'src/**/*.html' --write",
