@@ -19,11 +19,9 @@
       "dom"
     ],
     "paths": {
-      "lib-ngx-dialog": [
-        "dist/lib-ngx-dialog"
-      ],
-      "lib-ngx-dialog/*": [
-        "dist/lib-ngx-dialog/*"
+      "ngx-dialog": [
+        "dist/ngx-dialog/ngx-dialog",
+        "dist/ngx-dialog"
       ]
     }
   },

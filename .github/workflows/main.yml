@@ -33,14 +33,14 @@ jobs:
     - name: Unit Test
       run: npm run test -- --no-watch --no-progress --browsers=ChromeHeadlessCI
 
-#    - name: E2E Test
-#      run: npm run e2e -- --protractor-config=e2e/protractor-ci.conf.js
-
     - name: Build
-      run: npm run build
+      run: npm run build-storybook
+
+    - name: Add .nojekyll file to GitHub Pages deployment
+      run: touch storybook-static/.nojekyll
 
     - name: Deploy
       uses: peaceiris/actions-gh-pages@v3
       with:
         deploy_key: ${{ secrets.ACTIONS_DEPLOY_KEY }}
-        publish_dir: ./dist/ngx-dialog
+        publish_dir: ./storybook-static

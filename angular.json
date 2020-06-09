@@ -1,162 +1,40 @@
 {
   "$schema": "./node_modules/@angular/cli/lib/config/schema.json",
-  "version": 1,
+  "version": 1, 
   "newProjectRoot": "projects",
   "projects": {
     "ngx-dialog": {
-      "projectType": "application",
-      "schematics": {
-        "@schematics/angular:component": {
-          "style": "scss"
-        }
-      },
-      "root": "",
-      "sourceRoot": "src",
-      "prefix": "app",
-      "architect": {
-        "build": {
-          "builder": "@angular-devkit/build-angular:browser",
-          "options": {
-            "outputPath": "dist/ngx-dialog",
-            "index": "src/index.html",
-            "main": "src/main.ts",
-            "polyfills": "src/polyfills.ts",
-            "tsConfig": "tsconfig.app.json",
-            "aot": true,
-            "assets": [
-              "src/favicon.ico",
-              "src/.nojekyll",
-              "src/assets"
-            ],
-            "styles": [
-              "src/styles.scss"
-            ],
-            "scripts": []
-          },
-          "configurations": {
-            "production": {
-              "fileReplacements": [
-                {
-                  "replace": "src/environments/environment.ts",
-                  "with": "src/environments/environment.prod.ts"
-                }
-              ],
-              "optimization": true,
-              "outputHashing": "all",
-              "sourceMap": false,
-              "extractCss": true,
-              "namedChunks": false,
-              "extractLicenses": true,
-              "vendorChunk": false,
-              "buildOptimizer": true,
-              "budgets": [
-                {
-                  "type": "initial",
-                  "maximumWarning": "2mb",
-                  "maximumError": "5mb"
-                },
-                {
-                  "type": "anyComponentStyle",
-                  "maximumWarning": "6kb",
-                  "maximumError": "10kb"
-                }
-              ]
-            }
-          }
-        },
-        "serve": {
-          "builder": "@angular-devkit/build-angular:dev-server",
-          "options": {
-            "browserTarget": "ngx-dialog:build"
-          },
-          "configurations": {
-            "production": {
-              "browserTarget": "ngx-dialog:build:production"
-            }
-          }
-        },
-        "extract-i18n": {
-          "builder": "@angular-devkit/build-angular:extract-i18n",
-          "options": {
-            "browserTarget": "ngx-dialog:build"
-          }
-        },
-        "test": {
-          "builder": "@angular-devkit/build-angular:karma",
-          "options": {
-            "main": "src/test.ts",
-            "polyfills": "src/polyfills.ts",
-            "tsConfig": "tsconfig.spec.json",
-            "karmaConfig": "karma.conf.js",
-            "assets": [
-              "src/favicon.ico",
-              "src/assets"
-            ],
-            "styles": [
-              "src/styles.scss"
-            ],
-            "scripts": []
-          }
-        },
-        "lint": {
-          "builder": "@angular-devkit/build-angular:tslint",
-          "options": {
-            "tsConfig": [
-              "tsconfig.app.json",
-              "tsconfig.spec.json",
-              "e2e/tsconfig.json"
-            ],
-            "exclude": [
-              "**/node_modules/**"
-            ]
-          }
-        },
-        "e2e": {
-          "builder": "@angular-devkit/build-angular:protractor",
-          "options": {
-            "protractorConfig": "e2e/protractor.conf.js",
-            "devServerTarget": "ngx-dialog:serve"
-          },
-          "configurations": {
-            "production": {
-              "devServerTarget": "ngx-dialog:serve:production"
-            }
-          }
-        }
-      }
-    },
-    "lib-ngx-dialog": {
       "projectType": "library",
-      "root": "projects/lib-ngx-dialog",
-      "sourceRoot": "projects/lib-ngx-dialog/src",
+      "root": "projects/ngx-dialog",
+      "sourceRoot": "projects/ngx-dialog/src",
       "prefix": "lib",
       "architect": {
         "build": {
           "builder": "@angular-devkit/build-ng-packagr:build",
           "options": {
-            "tsConfig": "projects/lib-ngx-dialog/tsconfig.lib.json",
-            "project": "projects/lib-ngx-dialog/ng-package.json"
-          }
-        ,          "configurations": {
+            "tsConfig": "projects/ngx-dialog/tsconfig.lib.json",
+            "project": "projects/ngx-dialog/ng-package.json"
+          },
+          "configurations": {
             "production": {
-              "tsConfig": "projects/lib-ngx-dialog/tsconfig.lib.prod.json"
+              "tsConfig": "projects/ngx-dialog/tsconfig.lib.prod.json"
             }
           }
-},
+        },
         "test": {
           "builder": "@angular-devkit/build-angular:karma",
           "options": {
-            "main": "projects/lib-ngx-dialog/src/test.ts",
-            "tsConfig": "projects/lib-ngx-dialog/tsconfig.spec.json",
-            "karmaConfig": "projects/lib-ngx-dialog/karma.conf.js"
+            "main": "projects/ngx-dialog/src/test.ts",
+            "tsConfig": "projects/ngx-dialog/tsconfig.spec.json",
+            "karmaConfig": "projects/ngx-dialog/karma.conf.js"
           }
         },
         "lint": {
           "builder": "@angular-devkit/build-angular:tslint",
           "options": {
             "tsConfig": [
-              "projects/lib-ngx-dialog/tsconfig.lib.json",
-              "projects/lib-ngx-dialog/tsconfig.spec.json"
+              "projects/ngx-dialog/tsconfig.lib.json",
+              "projects/ngx-dialog/tsconfig.spec.json"
             ],
             "exclude": [
               "**/node_modules/**"
