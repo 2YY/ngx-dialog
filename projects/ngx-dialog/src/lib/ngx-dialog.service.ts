@@ -8,6 +8,7 @@ interface DialogSlot {
   id: string;
   overlayRef: OverlayRef;
   backdropClickSubscription: Subscription;
+  detachmentSubscription: Subscription;
   isShown: boolean;
 }
 
@@ -31,6 +32,7 @@ export class NgxDialogService {
       id: uuid(),
       overlayRef,
       backdropClickSubscription: overlayRef.backdropClick().subscribe(hide),
+      detachmentSubscription: overlayRef.detachments().subscribe(hide),
       isShown: false
     };
     this.slots.push(result);
@@ -53,6 +55,18 @@ export class NgxDialogService {
     const slot = this.findSlot(dialogSlotId);
     if (slot) {
       return slot.overlayRef.backdropClick().subscribe(callback);
+    }
+    return null;
+  }
+
+  /**
+   * Subscribe detachment of dialog on slot.
+   * @return subscription of detachment
+   */
+  subscribeDetachment(dialogSlotId: string, callback: () => any): Subscription | null {
+    const slot = this.findSlot(dialogSlotId);
+    if (slot) {
+      return slot.overlayRef.detachments().subscribe(callback);
     }
     return null;
   }
