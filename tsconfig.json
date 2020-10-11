@@ -19,9 +19,9 @@
       "dom"
     ],
     "paths": {
-      "ngx-dialog": [
-        "dist/ngx-dialog/ngx-dialog",
-        "dist/ngx-dialog"
+      "ngx-overlay": [
+        "dist/ngx-overlay/ngx-overlay",
+        "dist/ngx-overlay"
       ]
     }
   },

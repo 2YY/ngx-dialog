@@ -4,7 +4,7 @@ import {Overlay, OverlayConfig, OverlayRef} from '@angular/cdk/overlay';
 import {Subscription} from 'rxjs';
 import {v4 as uuid} from 'uuid';
 
-interface DialogSlot {
+interface OverlaySlot {
   id: string;
   overlayRef: OverlayRef;
   backdropClickSubscription: Subscription;
@@ -15,20 +15,20 @@ interface DialogSlot {
 @Injectable({
   providedIn: 'root'
 })
-export class NgxDialogService {
+export class NgxOverlayService {
 
-  private slots: DialogSlot[] = [];
+  private slots: OverlaySlot[] = [];
 
   constructor(private overlay: Overlay) {}
 
   /**
-   * Add dialog slot.
-   * @return ID of created dialog slot
+   * Add overlay slot.
+   * @return ID of created overlay slot
    */
-  addDialogSlot(config: OverlayConfig): string {
+  addOverlaySlot(config: OverlayConfig): string {
     const overlayRef = this.overlay.create(config);
     const hide = () => overlayRef.detach();
-    const result: DialogSlot = {
+    const result: OverlaySlot = {
       id: uuid(),
       overlayRef,
       backdropClickSubscription: overlayRef.backdropClick().subscribe(hide),
@@ -39,8 +39,8 @@ export class NgxDialogService {
     return result.id;
   }
 
-  removeDialogSlot(dialogSlotId: string) {
-    const slot = this.findSlot(dialogSlotId);
+  removeOverlaySlot(overlaySlotId: string) {
+    const slot = this.findSlot(overlaySlotId);
     if (slot) {
       slot.backdropClickSubscription.unsubscribe();
       this.slots = this.slots.filter(v => v !== slot);
@@ -48,11 +48,11 @@ export class NgxDialogService {
   }
 
   /**
-   * Subscribe backdropClick of dialog on slot.
+   * Subscribe backdropClick of overlay on slot.
    * @return subscription of backdropClick
    */
-  subscribeBackdropClick(dialogSlotId: string, callback: () => any): Subscription | null {
-    const slot = this.findSlot(dialogSlotId);
+  subscribeBackdropClick(overlaySlotId: string, callback: () => any): Subscription | null {
+    const slot = this.findSlot(overlaySlotId);
     if (slot) {
       return slot.overlayRef.backdropClick().subscribe(callback);
     }
@@ -60,27 +60,27 @@ export class NgxDialogService {
   }
 
   /**
-   * Subscribe detachment of dialog on slot.
+   * Subscribe detachment of overlay on slot.
    * @return subscription of detachment
    */
-  subscribeDetachment(dialogSlotId: string, callback: () => any): Subscription | null {
-    const slot = this.findSlot(dialogSlotId);
+  subscribeDetachment(overlaySlotId: string, callback: () => any): Subscription | null {
+    const slot = this.findSlot(overlaySlotId);
     if (slot) {
       return slot.overlayRef.detachments().subscribe(callback);
     }
     return null;
   }
 
-  show(portal: Portal<any>, dialogSlotId: string) {
-    const slot = this.findSlot(dialogSlotId);
+  show(portal: Portal<any>, overlaySlotId: string) {
+    const slot = this.findSlot(overlaySlotId);
     if (slot && !slot.isShown) {
       slot.overlayRef.attach(portal);
       slot.isShown = true;
     }
   }
 
-  hide(dialogSlotId: string) {
-    const slot = this.findSlot(dialogSlotId);
+  hide(overlaySlotId: string) {
+    const slot = this.findSlot(overlaySlotId);
     if (slot && slot.isShown) {
       slot.overlayRef.detach();
       slot.isShown = false;
@@ -91,8 +91,8 @@ export class NgxDialogService {
    * If exists the slot, return isShown status.
    * Unless, return null.
    */
-  isShown(dialogSlotId: string): boolean | null {
-    const slot = this.findSlot(dialogSlotId);
+  isShown(overlaySlotId: string): boolean | null {
+    const slot = this.findSlot(overlaySlotId);
     if (slot) {
       return slot.isShown;
     }
@@ -100,8 +100,8 @@ export class NgxDialogService {
     return null;
   }
 
-  private findSlot(dialogSlotId: string) {
-    return this.slots.find(v => v.id === dialogSlotId);
+  private findSlot(overlaySlotId: string) {
+    return this.slots.find(v => v.id === overlaySlotId);
   }
 
 }

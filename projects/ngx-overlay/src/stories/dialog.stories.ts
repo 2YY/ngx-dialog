@@ -2,7 +2,7 @@ import { action } from '@storybook/addon-actions';
 import { linkTo } from '@storybook/addon-links';
 
 import {Component, ElementRef, NgModule, OnDestroy, OnInit, ViewChild} from '@angular/core';
-import {NgxDialogService} from '../lib/ngx-dialog.service';
+import {NgxOverlayService} from '../lib/ngx-overlay.service';
 import {ComponentPortal, PortalModule} from '@angular/cdk/portal';
 import {ConnectedPosition, OverlayModule, OverlayPositionBuilder, ScrollStrategyOptions} from '@angular/cdk/overlay';
 import {RouterTestingModule} from '@angular/router/testing';
@@ -11,57 +11,57 @@ import {HttpClientModule} from '@angular/common/http';
 //////////////////////////////////////////////////
 
 @Component({
-  selector: 'lib-dialog-body',
+  selector: 'lib-overlay-body',
   template: '<p>Hello World</p>',
   styles: ['p {background:white; color:black; padding:30px; border-radius:8px;}']
 })
-class DialogBodyExampleComponent {}
+class OverlayBodyExampleComponent {}
 
 @NgModule({
-  declarations: [DialogBodyExampleComponent],
-  exports: [DialogBodyExampleComponent]
+  declarations: [OverlayBodyExampleComponent],
+  exports: [OverlayBodyExampleComponent]
 })
-class DialogBodyExampleModule {}
+class OverlayBodyExampleModule {}
 
 //////////////////////////////////////////////////
 
 @Component({
-  selector: 'lib-dialog-sandbox',
+  selector: 'lib-overlay-sandbox',
   template: [
     '<ng-container>',
       '<p><button #btn ',
-        '(click)="showDialog()" ',
+        '(click)="showOverlay()" ',
         '(mouseenter)="showTooltip()" ',
         '(mouseleave)="hideTooltip()"',
-      '>Show Dialog</button></p>',
+      '>Show Overlay</button></p>',
     '</ng-container>'
   ].join(''),
   styles: ['button {cursor:pointer;}']
 })
-class DialogSandboxComponent implements OnDestroy {
+class OverlaySandboxComponent implements OnDestroy {
 
   @ViewChild('btn') btnRef: ElementRef;
 
-  dialogSlotFixedCenterId: string;
-  dialogSlotTooltipId: string;
-  dialogBodyPortal = new ComponentPortal(DialogBodyExampleComponent);
+  overlaySlotFixedCenterId: string;
+  overlaySlotTooltipId: string;
+  overlayBodyPortal = new ComponentPortal(OverlayBodyExampleComponent);
 
   constructor(
-    public dialogService: NgxDialogService,
+    public overlayService: NgxOverlayService,
     private scrollStrategyOptions: ScrollStrategyOptions,
     private overlayPositionBuilder: OverlayPositionBuilder
   ) {}
 
   ngOnDestroy() {
-    if (this.dialogSlotFixedCenterId) { this.dialogService.removeDialogSlot(this.dialogSlotFixedCenterId); }
-    if (this.dialogSlotTooltipId) { this.dialogService.removeDialogSlot(this.dialogSlotTooltipId); }
+    if (this.overlaySlotFixedCenterId) { this.overlayService.removeOverlaySlot(this.overlaySlotFixedCenterId); }
+    if (this.overlaySlotTooltipId) { this.overlayService.removeOverlaySlot(this.overlaySlotTooltipId); }
   }
 
-  showDialog() {
-    this.hideDialog();
+  showOverlay() {
+    this.hideOverlay();
 
-    if (!this.dialogSlotFixedCenterId) {
-      this.dialogSlotFixedCenterId = this.dialogService.addDialogSlot({
+    if (!this.overlaySlotFixedCenterId) {
+      this.overlaySlotFixedCenterId = this.overlayService.addOverlaySlot({
         hasBackdrop: true,
         width: '62%',
         height: '62%',
@@ -70,20 +70,20 @@ class DialogSandboxComponent implements OnDestroy {
       });
     }
 
-    this.dialogService.show(this.dialogBodyPortal, this.dialogSlotFixedCenterId);
+    this.overlayService.show(this.overlayBodyPortal, this.overlaySlotFixedCenterId);
   }
 
-  hideDialog() {
-    if (this.dialogSlotFixedCenterId && this.dialogService.isShown(this.dialogSlotFixedCenterId)) {
-      this.dialogService.hide(this.dialogSlotFixedCenterId);
+  hideOverlay() {
+    if (this.overlaySlotFixedCenterId && this.overlayService.isShown(this.overlaySlotFixedCenterId)) {
+      this.overlayService.hide(this.overlaySlotFixedCenterId);
     }
   }
 
   showTooltip() {
     this.hideTooltip();
 
-    if (!this.dialogSlotTooltipId) {
-      this.dialogSlotTooltipId = this.dialogService.addDialogSlot({
+    if (!this.overlaySlotTooltipId) {
+      this.overlaySlotTooltipId = this.overlayService.addOverlaySlot({
         hasBackdrop: false,
         positionStrategy: this.overlayPositionBuilder.flexibleConnectedTo(this.btnRef).withPositions([{
           offsetX: 0,
@@ -96,35 +96,35 @@ class DialogSandboxComponent implements OnDestroy {
       });
     }
 
-    this.dialogService.show(this.dialogBodyPortal, this.dialogSlotTooltipId);
+    this.overlayService.show(this.overlayBodyPortal, this.overlaySlotTooltipId);
   }
 
   hideTooltip() {
-    if (this.dialogSlotTooltipId && this.dialogService.isShown(this.dialogSlotTooltipId)) {
-      this.dialogService.hide(this.dialogSlotTooltipId);
+    if (this.overlaySlotTooltipId && this.overlayService.isShown(this.overlaySlotTooltipId)) {
+      this.overlayService.hide(this.overlaySlotTooltipId);
     }
   }
 
 }
 
 @NgModule({
-  declarations: [DialogSandboxComponent],
-  imports: [DialogBodyExampleModule],
-  exports: [DialogSandboxComponent]
+  declarations: [OverlaySandboxComponent],
+  imports: [OverlayBodyExampleModule],
+  exports: [OverlaySandboxComponent]
 })
-class DialogSandboxModule {}
+class OverlaySandboxModule {}
 
 //////////////////////////////////////////////////
 
 export default {
-  title: 'Dialog',
+  title: 'Overlay',
 };
 
 export const BasicUsage = () => ({
-  component: DialogSandboxComponent,
+  component: OverlaySandboxComponent,
   props: {},
   moduleMetadata: {
-    imports: [RouterTestingModule, HttpClientModule, OverlayModule, PortalModule, DialogBodyExampleModule, DialogSandboxModule],
-    entryComponents: [DialogBodyExampleComponent]
+    imports: [RouterTestingModule, HttpClientModule, OverlayModule, PortalModule, OverlayBodyExampleModule, OverlaySandboxModule],
+    entryComponents: [OverlayBodyExampleComponent]
   }
 });

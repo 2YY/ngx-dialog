@@ -1,6 +1,6 @@
 import {async, ComponentFixture, TestBed} from '@angular/core/testing';
 
-import { NgxDialogService } from './ngx-dialog.service';
+import { NgxOverlayService } from './ngx-overlay.service';
 import { OverlayModule, OverlayPositionBuilder, ScrollStrategyOptions} from '@angular/cdk/overlay';
 import {Component, ElementRef, OnInit, TemplateRef, ViewChild, ViewContainerRef} from '@angular/core';
 import {TemplatePortal} from '@angular/cdk/portal';
@@ -9,10 +9,10 @@ import {TemplatePortal} from '@angular/cdk/portal';
   selector: 'lib-selector',
   template: `
     <div class="box">
-      <button #buttonShowDialog (click)="showDialog()">show dialog</button>
+      <button #buttonShowOverlay (click)="showOverlay()">show overlay</button>
     </div>
-    <ng-template #templateDialog>
-      <p>this is dialog</p>
+    <ng-template #templateOverlay>
+      <p>this is overlay</p>
     </ng-template>
   `,
   styles: [`
@@ -24,20 +24,20 @@ import {TemplatePortal} from '@angular/cdk/portal';
   `]
 })
 export class ExampleComponent implements OnInit {
-  @ViewChild('buttonShowDialog') buttonShowDialogRef: ElementRef;
-  @ViewChild('templateDialog') templateDialogRef: TemplateRef<any>;
+  @ViewChild('buttonShowOverlay') buttonShowOverlayRef: ElementRef;
+  @ViewChild('templateOverlay') templateOverlayRef: TemplateRef<any>;
 
-  private dialogSlotId: string;
+  private overlaySlotId: string;
 
   constructor(
     private scrollStrategyOptions: ScrollStrategyOptions,
     private overlayPositionBuilder: OverlayPositionBuilder,
-    private dialogService: NgxDialogService,
+    private overlayService: NgxOverlayService,
     private viewContainerRef: ViewContainerRef
   ) {}
 
   ngOnInit() {
-    this.dialogSlotId = this.dialogService.addDialogSlot({
+    this.overlaySlotId = this.overlayService.addOverlaySlot({
       hasBackdrop: true,
       width: '62%',
       height: '62%',
@@ -46,25 +46,25 @@ export class ExampleComponent implements OnInit {
     });
   }
 
-  showDialog() {
-    const p = new TemplatePortal(this.templateDialogRef, this.viewContainerRef);
-    this.dialogService.show(p, this.dialogSlotId);
+  showOverlay() {
+    const p = new TemplatePortal(this.templateOverlayRef, this.viewContainerRef);
+    this.overlayService.show(p, this.overlaySlotId);
   }
 
-  hideDialog() {
-    this.dialogService.hide(this.dialogSlotId);
+  hideOverlay() {
+    this.overlayService.hide(this.overlaySlotId);
   }
 
-  isShownDialog() {
-    return this.dialogService.isShown(this.dialogSlotId);
+  isShownOverlay() {
+    return this.overlayService.isShown(this.overlaySlotId);
   }
 
-  destroyDialog() {
-    this.dialogService.removeDialogSlot(this.dialogSlotId);
+  destroyOverlay() {
+    this.overlayService.removeOverlaySlot(this.overlaySlotId);
   }
 }
 
-describe('NgxDialogService', () => {
+describe('NgxOverlayService', () => {
   let component: ExampleComponent;
   let fixture: ComponentFixture<ExampleComponent>;
 
@@ -72,7 +72,7 @@ describe('NgxDialogService', () => {
     TestBed.configureTestingModule({
       declarations: [ExampleComponent],
       imports: [OverlayModule],
-      providers: [NgxDialogService]
+      providers: [NgxOverlayService]
     })
       .compileComponents();
   }));
@@ -87,18 +87,18 @@ describe('NgxDialogService', () => {
     expect(component).toBeTruthy();
   });
 
-  it('dialog should be shown', () => {
-    component.showDialog();
-    expect(component.isShownDialog()).toBeTrue();
+  it('overlay should be shown', () => {
+    component.showOverlay();
+    expect(component.isShownOverlay()).toBeTrue();
   });
 
-  it('dialog should be hidden', () => {
-    component.hideDialog();
-    expect(component.isShownDialog()).toBeFalse();
+  it('overlay should be hidden', () => {
+    component.hideOverlay();
+    expect(component.isShownOverlay()).toBeFalse();
   });
 
-  it('dialog slot should be deleted', () => {
-    component.destroyDialog();
-    expect(component.isShownDialog()).toBeNull();
+  it('overlay slot should be deleted', () => {
+    component.destroyOverlay();
+    expect(component.isShownOverlay()).toBeNull();
   });
 });

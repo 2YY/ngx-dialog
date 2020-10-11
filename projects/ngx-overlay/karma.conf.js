@@ -16,7 +16,7 @@ module.exports = function (config) {
     plugins,
     client: {clearContext: false},
     coverageIstanbulReporter: {
-      dir: require('path').join(__dirname, '../../coverage/ngx-dialog'),
+      dir: require('path').join(__dirname, '../../coverage/ngx-overlay'),
       reports: ['html', 'lcovonly', 'text-summary'],
       fixWebpackSourcePaths: true
     },

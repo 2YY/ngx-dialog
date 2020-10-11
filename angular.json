@@ -1,40 +1,40 @@
 {
   "$schema": "./node_modules/@angular/cli/lib/config/schema.json",
-  "version": 1, 
+  "version": 1,
   "newProjectRoot": "projects",
   "projects": {
-    "ngx-dialog": {
+    "ngx-overlay": {
       "projectType": "library",
-      "root": "projects/ngx-dialog",
-      "sourceRoot": "projects/ngx-dialog/src",
+      "root": "projects/ngx-overlay",
+      "sourceRoot": "projects/ngx-overlay/src",
       "prefix": "lib",
       "architect": {
         "build": {
           "builder": "@angular-devkit/build-ng-packagr:build",
           "options": {
-            "tsConfig": "projects/ngx-dialog/tsconfig.lib.json",
-            "project": "projects/ngx-dialog/ng-package.json"
+            "tsConfig": "projects/ngx-overlay/tsconfig.lib.json",
+            "project": "projects/ngx-overlay/ng-package.json"
           },
           "configurations": {
             "production": {
-              "tsConfig": "projects/ngx-dialog/tsconfig.lib.prod.json"
+              "tsConfig": "projects/ngx-overlay/tsconfig.lib.prod.json"
             }
           }
         },
         "test": {
           "builder": "@angular-devkit/build-angular:karma",
           "options": {
-            "main": "projects/ngx-dialog/src/test.ts",
-            "tsConfig": "projects/ngx-dialog/tsconfig.spec.json",
-            "karmaConfig": "projects/ngx-dialog/karma.conf.js"
+            "main": "projects/ngx-overlay/src/test.ts",
+            "tsConfig": "projects/ngx-overlay/tsconfig.spec.json",
+            "karmaConfig": "projects/ngx-overlay/karma.conf.js"
           }
         },
         "lint": {
           "builder": "@angular-devkit/build-angular:tslint",
           "options": {
             "tsConfig": [
-              "projects/ngx-dialog/tsconfig.lib.json",
-              "projects/ngx-dialog/tsconfig.spec.json"
+              "projects/ngx-overlay/tsconfig.lib.json",
+              "projects/ngx-overlay/tsconfig.spec.json"
             ],
             "exclude": [
               "**/node_modules/**"
@@ -43,5 +43,5 @@
         }
       }
     }},
-  "defaultProject": "ngx-dialog"
+  "defaultProject": "ngx-overlay"
 }

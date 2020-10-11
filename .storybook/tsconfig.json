@@ -1,5 +1,5 @@
 {
-  "extends": "../projects/ngx-dialog/tsconfig.lib.json",
+  "extends": "../projects/ngx-overlay/tsconfig.lib.json",
   "compilerOptions": {
     "types": [
       "node"
