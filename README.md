@@ -1,8 +1,8 @@
 # NgxOverlay
 
 ![CI](https://github.com/2YY/ngx-overlay/workflows/CI/badge.svg)
-[![Maintainability](https://api.codeclimate.com/v1/badges/320e182fa88aa750daaa/maintainability)](https://codeclimate.com/github/2YY/ngx-overlay/maintainability)
-[![Test Coverage](https://api.codeclimate.com/v1/badges/320e182fa88aa750daaa/test_coverage)](https://codeclimate.com/github/2YY/ngx-overlay/test_coverage)
+[![Maintainability](https://api.codeclimate.com/v1/badges/c00046125264170a84e5/maintainability)](https://codeclimate.com/github/2YY/ngx-overlay/maintainability)
+[![Test Coverage](https://api.codeclimate.com/v1/badges/c00046125264170a84e5/test_coverage)](https://codeclimate.com/github/2YY/ngx-overlay/test_coverage)
 
 This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 8.3.24.
 
