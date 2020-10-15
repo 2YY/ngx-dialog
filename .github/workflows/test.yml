@@ -1,4 +1,4 @@
-name: CI
+name: Test
 
 on:
   push:
@@ -27,13 +27,13 @@ jobs:
       if: steps.cache.outputs.cache-hit != 'true'
       run: yarn install
 
-    - name: Lint
+    - name: Should pass linting
       run: npm run lint
 
-    - name: Unit Test
+    - name: Should pass unit test
       run: npm run test -- --no-watch --no-progress --browsers=ChromeHeadlessCI
 
-    - name: Build
+    - name: should succeed source building
       run: npm run build-storybook
 
     - name: Add .nojekyll file to GitHub Pages deployment
