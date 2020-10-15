@@ -8,7 +8,7 @@ on:
       - completed
 
 jobs:
-  main:
+  deploy:
 
     runs-on: ubuntu-18.04
 
