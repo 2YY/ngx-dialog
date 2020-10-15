@@ -1,6 +1,6 @@
 # NgxOverlay
 
-![CI](https://github.com/2YY/ngx-overlay/workflows/CI/badge.svg)
+![Test](https://github.com/2YY/ngx-overlay/workflows/Test/badge.svg)
 [![Maintainability](https://api.codeclimate.com/v1/badges/c00046125264170a84e5/maintainability)](https://codeclimate.com/github/2YY/ngx-overlay/maintainability)
 [![Test Coverage](https://api.codeclimate.com/v1/badges/c00046125264170a84e5/test_coverage)](https://codeclimate.com/github/2YY/ngx-overlay/test_coverage)
 
