@@ -25,13 +25,30 @@ jobs:
 
     - name: Install node modules
       if: steps.cache.outputs.cache-hit != 'true'
-      run: yarn install
+      run: yarn
 
     - name: Should pass linting
-      run: npm run lint
+      run: yarn run lint
 
     - name: Should pass unit test
-      run: npm run test -- --no-watch --no-progress --browsers=ChromeHeadlessCI
+      run: yarn run test -- --no-watch --no-progress --browsers=ChromeHeadlessCI
 
     - name: Should succeed source building
-      run: npm run build-storybook
+      run: yarn run build-storybook
+
+  coverage:
+    needs: [test]
+    name: coverage
+    runs-on: ubuntu-18.04
+    steps:
+    - uses: actions/checkout@master
+    - uses: actions/setup-node@master
+      with:
+        node-version: '12'
+    - run: yarn
+    - run: yarn build-storybook
+    - uses: paambaati/codeclimate-action@v2.2.4
+      env:
+        CC_TEST_REPORTER_ID: ${{ secrets.CC_TEST_REPORTER_ID }}
+      with:
+        coverageCommand: yarn run test -- --no-watch --no-progress --code-coverage --browsers=ChromeHeadlessCI
