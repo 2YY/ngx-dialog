@@ -1,12 +1,8 @@
-import { action } from '@storybook/addon-actions';
-import { linkTo } from '@storybook/addon-links';
-
 import {Component, ElementRef, NgModule, OnDestroy, OnInit, ViewChild} from '@angular/core';
 import {NgxOverlayService} from '../lib/ngx-overlay.service';
 import {ComponentPortal, PortalModule} from '@angular/cdk/portal';
 import {ConnectedPosition, OverlayModule, OverlayPositionBuilder, ScrollStrategyOptions} from '@angular/cdk/overlay';
-import {RouterTestingModule} from '@angular/router/testing';
-import {HttpClientModule} from '@angular/common/http';
+import {Meta, moduleMetadata, Story} from '@storybook/angular';
 
 //////////////////////////////////////////////////
 
@@ -117,14 +113,21 @@ class OverlaySandboxModule {}
 //////////////////////////////////////////////////
 
 export default {
-  title: 'Overlay',
-};
-
-export const BasicUsage = () => ({
+  title: 'Examples/Overlay',
   component: OverlaySandboxComponent,
-  props: {},
-  moduleMetadata: {
-    imports: [RouterTestingModule, HttpClientModule, OverlayModule, PortalModule, OverlayBodyExampleModule, OverlaySandboxModule],
-    entryComponents: [OverlayBodyExampleComponent]
-  }
+  decorators: [
+    moduleMetadata({
+      imports: [OverlayModule, PortalModule, OverlaySandboxModule],
+      entryComponents: [OverlayBodyExampleComponent]
+    })
+  ]
+} as Meta;
+
+const Template: Story<OverlaySandboxComponent> = (args: OverlaySandboxComponent) => ({
+  component: OverlaySandboxComponent,
+  props: args
 });
+
+export const Demo = Template.bind({});
+Demo.args = {};
+

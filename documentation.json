@@ -1,0 +1,782 @@
+{
+    "pipes": [],
+    "interfaces": [
+        {
+            "name": "OverlaySlot",
+            "id": "interface-OverlaySlot-955500801efbd2240dfde3fd166f930c",
+            "file": "projects/ngx-overlay/src/lib/ngx-overlay.service.ts",
+            "type": "interface",
+            "sourceCode": "import { Injectable } from '@angular/core';\nimport {Portal} from '@angular/cdk/portal';\nimport {Overlay, OverlayConfig, OverlayRef} from '@angular/cdk/overlay';\nimport {Subscription} from 'rxjs';\nimport {v4 as uuid} from 'uuid';\n\ninterface OverlaySlot {\n  id: string;\n  overlayRef: OverlayRef;\n  backdropClickSubscription: Subscription;\n  detachmentSubscription: Subscription;\n  isShown: boolean;\n}\n\n@Injectable({\n  providedIn: 'root'\n})\nexport class NgxOverlayService {\n\n  private slots: OverlaySlot[] = [];\n\n  constructor(private overlay: Overlay) {}\n\n  /**\n   * Add overlay slot.\n   * @return ID of created overlay slot\n   */\n  addOverlaySlot(config: OverlayConfig): string {\n    const overlayRef = this.overlay.create(config);\n    const hide = () => overlayRef.detach();\n    const result: OverlaySlot = {\n      id: uuid(),\n      overlayRef,\n      backdropClickSubscription: overlayRef.backdropClick().subscribe(hide),\n      detachmentSubscription: overlayRef.detachments().subscribe(hide),\n      isShown: false\n    };\n    this.slots.push(result);\n    return result.id;\n  }\n\n  removeOverlaySlot(overlaySlotId: string) {\n    const slot = this.findSlot(overlaySlotId);\n    if (slot) {\n      slot.backdropClickSubscription.unsubscribe();\n      this.slots = this.slots.filter(v => v !== slot);\n    }\n  }\n\n  /**\n   * Subscribe backdropClick of overlay on slot.\n   * @return subscription of backdropClick\n   */\n  subscribeBackdropClick(overlaySlotId: string, callback: () => any): Subscription | null {\n    const slot = this.findSlot(overlaySlotId);\n    if (slot) {\n      return slot.overlayRef.backdropClick().subscribe(callback);\n    }\n    return null;\n  }\n\n  /**\n   * Subscribe detachment of overlay on slot.\n   * @return subscription of detachment\n   */\n  subscribeDetachment(overlaySlotId: string, callback: () => any): Subscription | null {\n    const slot = this.findSlot(overlaySlotId);\n    if (slot) {\n      return slot.overlayRef.detachments().subscribe(callback);\n    }\n    return null;\n  }\n\n  show(portal: Portal<any>, overlaySlotId: string) {\n    const slot = this.findSlot(overlaySlotId);\n    if (slot && !slot.isShown) {\n      slot.overlayRef.attach(portal);\n      slot.isShown = true;\n    }\n  }\n\n  hide(overlaySlotId: string) {\n    const slot = this.findSlot(overlaySlotId);\n    if (slot && slot.isShown) {\n      slot.overlayRef.detach();\n      slot.isShown = false;\n    }\n  }\n\n  /**\n   * If exists the slot, return isShown status.\n   * Unless, return null.\n   */\n  isShown(overlaySlotId: string): boolean | null {\n    const slot = this.findSlot(overlaySlotId);\n    if (slot) {\n      return slot.isShown;\n    }\n\n    return null;\n  }\n\n  private findSlot(overlaySlotId: string) {\n    return this.slots.find(v => v.id === overlaySlotId);\n  }\n\n}\n",
+            "properties": [
+                {
+                    "name": "backdropClickSubscription",
+                    "type": "Subscription",
+                    "optional": false,
+                    "description": "",
+                    "line": 10
+                },
+                {
+                    "name": "detachmentSubscription",
+                    "type": "Subscription",
+                    "optional": false,
+                    "description": "",
+                    "line": 11
+                },
+                {
+                    "name": "id",
+                    "type": "string",
+                    "optional": false,
+                    "description": "",
+                    "line": 8
+                },
+                {
+                    "name": "isShown",
+                    "type": "boolean",
+                    "optional": false,
+                    "description": "",
+                    "line": 12
+                },
+                {
+                    "name": "overlayRef",
+                    "type": "OverlayRef",
+                    "optional": false,
+                    "description": "",
+                    "line": 9
+                }
+            ],
+            "indexSignatures": [],
+            "kind": 150,
+            "methods": []
+        }
+    ],
+    "injectables": [
+        {
+            "name": "NgxOverlayService",
+            "id": "injectable-NgxOverlayService-955500801efbd2240dfde3fd166f930c",
+            "file": "projects/ngx-overlay/src/lib/ngx-overlay.service.ts",
+            "properties": [
+                {
+                    "name": "slots",
+                    "defaultValue": "[]",
+                    "type": "OverlaySlot[]",
+                    "optional": false,
+                    "description": "",
+                    "line": 20,
+                    "modifierKind": [
+                        112
+                    ]
+                }
+            ],
+            "methods": [
+                {
+                    "name": "addOverlaySlot",
+                    "args": [
+                        {
+                            "name": "config",
+                            "type": "OverlayConfig"
+                        }
+                    ],
+                    "optional": false,
+                    "returnType": "string",
+                    "typeParameters": [],
+                    "line": 28,
+                    "description": "<p>Add overlay slot.</p>\n",
+                    "jsdoctags": [
+                        {
+                            "name": "config",
+                            "type": "OverlayConfig",
+                            "tagName": {
+                                "text": "param"
+                            }
+                        },
+                        {
+                            "tagName": {
+                                "pos": 589,
+                                "end": 595,
+                                "flags": 0,
+                                "escapedText": "return"
+                            },
+                            "comment": "<p>ID of created overlay slot</p>\n"
+                        }
+                    ]
+                },
+                {
+                    "name": "findSlot",
+                    "args": [
+                        {
+                            "name": "overlaySlotId",
+                            "type": "string"
+                        }
+                    ],
+                    "optional": false,
+                    "returnType": "any",
+                    "typeParameters": [],
+                    "line": 103,
+                    "modifierKind": [
+                        112
+                    ],
+                    "jsdoctags": [
+                        {
+                            "name": "overlaySlotId",
+                            "type": "string",
+                            "tagName": {
+                                "text": "param"
+                            }
+                        }
+                    ]
+                },
+                {
+                    "name": "hide",
+                    "args": [
+                        {
+                            "name": "overlaySlotId",
+                            "type": "string"
+                        }
+                    ],
+                    "optional": false,
+                    "returnType": "void",
+                    "typeParameters": [],
+                    "line": 82,
+                    "jsdoctags": [
+                        {
+                            "name": "overlaySlotId",
+                            "type": "string",
+                            "tagName": {
+                                "text": "param"
+                            }
+                        }
+                    ]
+                },
+                {
+                    "name": "isShown",
+                    "args": [
+                        {
+                            "name": "overlaySlotId",
+                            "type": "string"
+                        }
+                    ],
+                    "optional": false,
+                    "returnType": "boolean | null",
+                    "typeParameters": [],
+                    "line": 94,
+                    "description": "<p>If exists the slot, return isShown status.\nUnless, return null.</p>\n",
+                    "jsdoctags": [
+                        {
+                            "name": "overlaySlotId",
+                            "type": "string",
+                            "tagName": {
+                                "text": "param"
+                            }
+                        }
+                    ]
+                },
+                {
+                    "name": "removeOverlaySlot",
+                    "args": [
+                        {
+                            "name": "overlaySlotId",
+                            "type": "string"
+                        }
+                    ],
+                    "optional": false,
+                    "returnType": "void",
+                    "typeParameters": [],
+                    "line": 42,
+                    "jsdoctags": [
+                        {
+                            "name": "overlaySlotId",
+                            "type": "string",
+                            "tagName": {
+                                "text": "param"
+                            }
+                        }
+                    ]
+                },
+                {
+                    "name": "show",
+                    "args": [
+                        {
+                            "name": "portal",
+                            "type": "Portal<any>"
+                        },
+                        {
+                            "name": "overlaySlotId",
+                            "type": "string"
+                        }
+                    ],
+                    "optional": false,
+                    "returnType": "void",
+                    "typeParameters": [],
+                    "line": 74,
+                    "jsdoctags": [
+                        {
+                            "name": "portal",
+                            "type": "Portal<any>",
+                            "tagName": {
+                                "text": "param"
+                            }
+                        },
+                        {
+                            "name": "overlaySlotId",
+                            "type": "string",
+                            "tagName": {
+                                "text": "param"
+                            }
+                        }
+                    ]
+                },
+                {
+                    "name": "subscribeBackdropClick",
+                    "args": [
+                        {
+                            "name": "overlaySlotId",
+                            "type": "string"
+                        },
+                        {
+                            "name": "callback",
+                            "type": "function",
+                            "function": []
+                        }
+                    ],
+                    "optional": false,
+                    "returnType": "Subscription | null",
+                    "typeParameters": [],
+                    "line": 54,
+                    "description": "<p>Subscribe backdropClick of overlay on slot.</p>\n",
+                    "jsdoctags": [
+                        {
+                            "name": "overlaySlotId",
+                            "type": "string",
+                            "tagName": {
+                                "text": "param"
+                            }
+                        },
+                        {
+                            "name": "callback",
+                            "type": "function",
+                            "function": [],
+                            "tagName": {
+                                "text": "param"
+                            }
+                        },
+                        {
+                            "tagName": {
+                                "pos": 1365,
+                                "end": 1371,
+                                "flags": 0,
+                                "escapedText": "return"
+                            },
+                            "comment": "<p>subscription of backdropClick</p>\n"
+                        }
+                    ]
+                },
+                {
+                    "name": "subscribeDetachment",
+                    "args": [
+                        {
+                            "name": "overlaySlotId",
+                            "type": "string"
+                        },
+                        {
+                            "name": "callback",
+                            "type": "function",
+                            "function": []
+                        }
+                    ],
+                    "optional": false,
+                    "returnType": "Subscription | null",
+                    "typeParameters": [],
+                    "line": 66,
+                    "description": "<p>Subscribe detachment of overlay on slot.</p>\n",
+                    "jsdoctags": [
+                        {
+                            "name": "overlaySlotId",
+                            "type": "string",
+                            "tagName": {
+                                "text": "param"
+                            }
+                        },
+                        {
+                            "name": "callback",
+                            "type": "function",
+                            "function": [],
+                            "tagName": {
+                                "text": "param"
+                            }
+                        },
+                        {
+                            "tagName": {
+                                "pos": 1715,
+                                "end": 1721,
+                                "flags": 0,
+                                "escapedText": "return"
+                            },
+                            "comment": "<p>subscription of detachment</p>\n"
+                        }
+                    ]
+                }
+            ],
+            "description": "",
+            "sourceCode": "import { Injectable } from '@angular/core';\nimport {Portal} from '@angular/cdk/portal';\nimport {Overlay, OverlayConfig, OverlayRef} from '@angular/cdk/overlay';\nimport {Subscription} from 'rxjs';\nimport {v4 as uuid} from 'uuid';\n\ninterface OverlaySlot {\n  id: string;\n  overlayRef: OverlayRef;\n  backdropClickSubscription: Subscription;\n  detachmentSubscription: Subscription;\n  isShown: boolean;\n}\n\n@Injectable({\n  providedIn: 'root'\n})\nexport class NgxOverlayService {\n\n  private slots: OverlaySlot[] = [];\n\n  constructor(private overlay: Overlay) {}\n\n  /**\n   * Add overlay slot.\n   * @return ID of created overlay slot\n   */\n  addOverlaySlot(config: OverlayConfig): string {\n    const overlayRef = this.overlay.create(config);\n    const hide = () => overlayRef.detach();\n    const result: OverlaySlot = {\n      id: uuid(),\n      overlayRef,\n      backdropClickSubscription: overlayRef.backdropClick().subscribe(hide),\n      detachmentSubscription: overlayRef.detachments().subscribe(hide),\n      isShown: false\n    };\n    this.slots.push(result);\n    return result.id;\n  }\n\n  removeOverlaySlot(overlaySlotId: string) {\n    const slot = this.findSlot(overlaySlotId);\n    if (slot) {\n      slot.backdropClickSubscription.unsubscribe();\n      this.slots = this.slots.filter(v => v !== slot);\n    }\n  }\n\n  /**\n   * Subscribe backdropClick of overlay on slot.\n   * @return subscription of backdropClick\n   */\n  subscribeBackdropClick(overlaySlotId: string, callback: () => any): Subscription | null {\n    const slot = this.findSlot(overlaySlotId);\n    if (slot) {\n      return slot.overlayRef.backdropClick().subscribe(callback);\n    }\n    return null;\n  }\n\n  /**\n   * Subscribe detachment of overlay on slot.\n   * @return subscription of detachment\n   */\n  subscribeDetachment(overlaySlotId: string, callback: () => any): Subscription | null {\n    const slot = this.findSlot(overlaySlotId);\n    if (slot) {\n      return slot.overlayRef.detachments().subscribe(callback);\n    }\n    return null;\n  }\n\n  show(portal: Portal<any>, overlaySlotId: string) {\n    const slot = this.findSlot(overlaySlotId);\n    if (slot && !slot.isShown) {\n      slot.overlayRef.attach(portal);\n      slot.isShown = true;\n    }\n  }\n\n  hide(overlaySlotId: string) {\n    const slot = this.findSlot(overlaySlotId);\n    if (slot && slot.isShown) {\n      slot.overlayRef.detach();\n      slot.isShown = false;\n    }\n  }\n\n  /**\n   * If exists the slot, return isShown status.\n   * Unless, return null.\n   */\n  isShown(overlaySlotId: string): boolean | null {\n    const slot = this.findSlot(overlaySlotId);\n    if (slot) {\n      return slot.isShown;\n    }\n\n    return null;\n  }\n\n  private findSlot(overlaySlotId: string) {\n    return this.slots.find(v => v.id === overlaySlotId);\n  }\n\n}\n",
+            "constructorObj": {
+                "name": "constructor",
+                "description": "",
+                "args": [
+                    {
+                        "name": "overlay",
+                        "type": "Overlay"
+                    }
+                ],
+                "line": 20,
+                "jsdoctags": [
+                    {
+                        "name": "overlay",
+                        "type": "Overlay",
+                        "tagName": {
+                            "text": "param"
+                        }
+                    }
+                ]
+            },
+            "type": "injectable"
+        }
+    ],
+    "classes": [],
+    "directives": [],
+    "components": [
+        {
+            "name": "OverlayBodyExampleComponent",
+            "id": "component-OverlayBodyExampleComponent-a1bf734f6bc6f52a20b7123f4af9050d",
+            "file": "projects/ngx-overlay/src/stories/dialog.stories.ts",
+            "encapsulation": [],
+            "entryComponents": [],
+            "inputs": [],
+            "outputs": [],
+            "providers": [],
+            "selector": "lib-overlay-body",
+            "styleUrls": [],
+            "styles": [
+                "p {background:white; color:black; padding:30px; border-radius:8px;}"
+            ],
+            "template": "<p>Hello World</p>",
+            "templateUrl": [],
+            "viewProviders": [],
+            "inputsClass": [],
+            "outputsClass": [],
+            "propertiesClass": [],
+            "methodsClass": [],
+            "hostBindings": [],
+            "hostListeners": [],
+            "description": "",
+            "rawdescription": "",
+            "type": "component",
+            "sourceCode": "import {Component, ElementRef, NgModule, OnDestroy, OnInit, ViewChild} from '@angular/core';\nimport {NgxOverlayService} from '../lib/ngx-overlay.service';\nimport {ComponentPortal, PortalModule} from '@angular/cdk/portal';\nimport {ConnectedPosition, OverlayModule, OverlayPositionBuilder, ScrollStrategyOptions} from '@angular/cdk/overlay';\nimport {Meta, moduleMetadata, Story} from '@storybook/angular';\n\n//////////////////////////////////////////////////\n\n@Component({\n  selector: 'lib-overlay-body',\n  template: '<p>Hello World</p>',\n  styles: ['p {background:white; color:black; padding:30px; border-radius:8px;}']\n})\nclass OverlayBodyExampleComponent {}\n\n@NgModule({\n  declarations: [OverlayBodyExampleComponent],\n  exports: [OverlayBodyExampleComponent]\n})\nclass OverlayBodyExampleModule {}\n\n//////////////////////////////////////////////////\n\n@Component({\n  selector: 'lib-overlay-sandbox',\n  template: [\n    '<ng-container>',\n      '<p><button #btn ',\n        '(click)=\"showOverlay()\" ',\n        '(mouseenter)=\"showTooltip()\" ',\n        '(mouseleave)=\"hideTooltip()\"',\n      '>Show Overlay</button></p>',\n    '</ng-container>'\n  ].join(''),\n  styles: ['button {cursor:pointer;}']\n})\nclass OverlaySandboxComponent implements OnDestroy {\n\n  @ViewChild('btn') btnRef: ElementRef;\n\n  overlaySlotFixedCenterId: string;\n  overlaySlotTooltipId: string;\n  overlayBodyPortal = new ComponentPortal(OverlayBodyExampleComponent);\n\n  constructor(\n    public overlayService: NgxOverlayService,\n    private scrollStrategyOptions: ScrollStrategyOptions,\n    private overlayPositionBuilder: OverlayPositionBuilder\n  ) {}\n\n  ngOnDestroy() {\n    if (this.overlaySlotFixedCenterId) { this.overlayService.removeOverlaySlot(this.overlaySlotFixedCenterId); }\n    if (this.overlaySlotTooltipId) { this.overlayService.removeOverlaySlot(this.overlaySlotTooltipId); }\n  }\n\n  showOverlay() {\n    this.hideOverlay();\n\n    if (!this.overlaySlotFixedCenterId) {\n      this.overlaySlotFixedCenterId = this.overlayService.addOverlaySlot({\n        hasBackdrop: true,\n        width: '62%',\n        height: '62%',\n        positionStrategy: this.overlayPositionBuilder.global().centerHorizontally().centerVertically(),\n        scrollStrategy: this.scrollStrategyOptions.block()\n      });\n    }\n\n    this.overlayService.show(this.overlayBodyPortal, this.overlaySlotFixedCenterId);\n  }\n\n  hideOverlay() {\n    if (this.overlaySlotFixedCenterId && this.overlayService.isShown(this.overlaySlotFixedCenterId)) {\n      this.overlayService.hide(this.overlaySlotFixedCenterId);\n    }\n  }\n\n  showTooltip() {\n    this.hideTooltip();\n\n    if (!this.overlaySlotTooltipId) {\n      this.overlaySlotTooltipId = this.overlayService.addOverlaySlot({\n        hasBackdrop: false,\n        positionStrategy: this.overlayPositionBuilder.flexibleConnectedTo(this.btnRef).withPositions([{\n          offsetX: 0,\n          offsetY: 0,\n          originX: 'center',\n          originY: 'bottom',\n          overlayX: 'center',\n          overlayY: 'top'\n        } as ConnectedPosition])\n      });\n    }\n\n    this.overlayService.show(this.overlayBodyPortal, this.overlaySlotTooltipId);\n  }\n\n  hideTooltip() {\n    if (this.overlaySlotTooltipId && this.overlayService.isShown(this.overlaySlotTooltipId)) {\n      this.overlayService.hide(this.overlaySlotTooltipId);\n    }\n  }\n\n}\n\n@NgModule({\n  declarations: [OverlaySandboxComponent],\n  imports: [OverlayBodyExampleModule],\n  exports: [OverlaySandboxComponent]\n})\nclass OverlaySandboxModule {}\n\n//////////////////////////////////////////////////\n\nexport default {\n  title: 'Examples/Overlay',\n  component: OverlaySandboxComponent,\n  decorators: [\n    moduleMetadata({\n      imports: [OverlayModule, PortalModule, OverlaySandboxModule]\n    })\n  ]\n} as Meta;\n\nconst Template: Story<OverlaySandboxComponent> = (args: OverlaySandboxComponent) => ({\n  component: OverlaySandboxComponent,\n  props: args\n});\n\nexport const Demo = Template.bind({});\nDemo.args = {};\n\n",
+            "assetsDirs": [],
+            "styleUrlsData": "",
+            "stylesData": "p {background:white; color:black; padding:30px; border-radius:8px;}\n"
+        },
+        {
+            "name": "OverlaySandboxComponent",
+            "id": "component-OverlaySandboxComponent-a1bf734f6bc6f52a20b7123f4af9050d",
+            "file": "projects/ngx-overlay/src/stories/dialog.stories.ts",
+            "encapsulation": [],
+            "entryComponents": [],
+            "inputs": [],
+            "outputs": [],
+            "providers": [],
+            "selector": "lib-overlay-sandbox",
+            "styleUrls": [],
+            "styles": [
+                "button {cursor:pointer;}"
+            ],
+            "templateUrl": [],
+            "viewProviders": [],
+            "inputsClass": [],
+            "outputsClass": [],
+            "propertiesClass": [
+                {
+                    "name": "btnRef",
+                    "type": "ElementRef",
+                    "optional": false,
+                    "description": "",
+                    "line": 39,
+                    "decorators": [
+                        {
+                            "name": "ViewChild",
+                            "stringifiedArguments": "'btn'"
+                        }
+                    ]
+                },
+                {
+                    "name": "overlayBodyPortal",
+                    "defaultValue": "new ComponentPortal(OverlayBodyExampleComponent)",
+                    "type": "",
+                    "optional": false,
+                    "description": "",
+                    "line": 43
+                },
+                {
+                    "name": "overlayService",
+                    "type": "NgxOverlayService",
+                    "optional": false,
+                    "description": "",
+                    "line": 46,
+                    "modifierKind": [
+                        114
+                    ]
+                },
+                {
+                    "name": "overlaySlotFixedCenterId",
+                    "type": "string",
+                    "optional": false,
+                    "description": "",
+                    "line": 41
+                },
+                {
+                    "name": "overlaySlotTooltipId",
+                    "type": "string",
+                    "optional": false,
+                    "description": "",
+                    "line": 42
+                }
+            ],
+            "methodsClass": [
+                {
+                    "name": "hideOverlay",
+                    "args": [],
+                    "optional": false,
+                    "returnType": "void",
+                    "typeParameters": [],
+                    "line": 72
+                },
+                {
+                    "name": "hideTooltip",
+                    "args": [],
+                    "optional": false,
+                    "returnType": "void",
+                    "typeParameters": [],
+                    "line": 98
+                },
+                {
+                    "name": "ngOnDestroy",
+                    "args": [],
+                    "optional": false,
+                    "returnType": "void",
+                    "typeParameters": [],
+                    "line": 51
+                },
+                {
+                    "name": "showOverlay",
+                    "args": [],
+                    "optional": false,
+                    "returnType": "void",
+                    "typeParameters": [],
+                    "line": 56
+                },
+                {
+                    "name": "showTooltip",
+                    "args": [],
+                    "optional": false,
+                    "returnType": "void",
+                    "typeParameters": [],
+                    "line": 78
+                }
+            ],
+            "hostBindings": [],
+            "hostListeners": [],
+            "description": "",
+            "rawdescription": "",
+            "type": "component",
+            "sourceCode": "import {Component, ElementRef, NgModule, OnDestroy, OnInit, ViewChild} from '@angular/core';\nimport {NgxOverlayService} from '../lib/ngx-overlay.service';\nimport {ComponentPortal, PortalModule} from '@angular/cdk/portal';\nimport {ConnectedPosition, OverlayModule, OverlayPositionBuilder, ScrollStrategyOptions} from '@angular/cdk/overlay';\nimport {Meta, moduleMetadata, Story} from '@storybook/angular';\n\n//////////////////////////////////////////////////\n\n@Component({\n  selector: 'lib-overlay-body',\n  template: '<p>Hello World</p>',\n  styles: ['p {background:white; color:black; padding:30px; border-radius:8px;}']\n})\nclass OverlayBodyExampleComponent {}\n\n@NgModule({\n  declarations: [OverlayBodyExampleComponent],\n  exports: [OverlayBodyExampleComponent]\n})\nclass OverlayBodyExampleModule {}\n\n//////////////////////////////////////////////////\n\n@Component({\n  selector: 'lib-overlay-sandbox',\n  template: [\n    '<ng-container>',\n      '<p><button #btn ',\n        '(click)=\"showOverlay()\" ',\n        '(mouseenter)=\"showTooltip()\" ',\n        '(mouseleave)=\"hideTooltip()\"',\n      '>Show Overlay</button></p>',\n    '</ng-container>'\n  ].join(''),\n  styles: ['button {cursor:pointer;}']\n})\nclass OverlaySandboxComponent implements OnDestroy {\n\n  @ViewChild('btn') btnRef: ElementRef;\n\n  overlaySlotFixedCenterId: string;\n  overlaySlotTooltipId: string;\n  overlayBodyPortal = new ComponentPortal(OverlayBodyExampleComponent);\n\n  constructor(\n    public overlayService: NgxOverlayService,\n    private scrollStrategyOptions: ScrollStrategyOptions,\n    private overlayPositionBuilder: OverlayPositionBuilder\n  ) {}\n\n  ngOnDestroy() {\n    if (this.overlaySlotFixedCenterId) { this.overlayService.removeOverlaySlot(this.overlaySlotFixedCenterId); }\n    if (this.overlaySlotTooltipId) { this.overlayService.removeOverlaySlot(this.overlaySlotTooltipId); }\n  }\n\n  showOverlay() {\n    this.hideOverlay();\n\n    if (!this.overlaySlotFixedCenterId) {\n      this.overlaySlotFixedCenterId = this.overlayService.addOverlaySlot({\n        hasBackdrop: true,\n        width: '62%',\n        height: '62%',\n        positionStrategy: this.overlayPositionBuilder.global().centerHorizontally().centerVertically(),\n        scrollStrategy: this.scrollStrategyOptions.block()\n      });\n    }\n\n    this.overlayService.show(this.overlayBodyPortal, this.overlaySlotFixedCenterId);\n  }\n\n  hideOverlay() {\n    if (this.overlaySlotFixedCenterId && this.overlayService.isShown(this.overlaySlotFixedCenterId)) {\n      this.overlayService.hide(this.overlaySlotFixedCenterId);\n    }\n  }\n\n  showTooltip() {\n    this.hideTooltip();\n\n    if (!this.overlaySlotTooltipId) {\n      this.overlaySlotTooltipId = this.overlayService.addOverlaySlot({\n        hasBackdrop: false,\n        positionStrategy: this.overlayPositionBuilder.flexibleConnectedTo(this.btnRef).withPositions([{\n          offsetX: 0,\n          offsetY: 0,\n          originX: 'center',\n          originY: 'bottom',\n          overlayX: 'center',\n          overlayY: 'top'\n        } as ConnectedPosition])\n      });\n    }\n\n    this.overlayService.show(this.overlayBodyPortal, this.overlaySlotTooltipId);\n  }\n\n  hideTooltip() {\n    if (this.overlaySlotTooltipId && this.overlayService.isShown(this.overlaySlotTooltipId)) {\n      this.overlayService.hide(this.overlaySlotTooltipId);\n    }\n  }\n\n}\n\n@NgModule({\n  declarations: [OverlaySandboxComponent],\n  imports: [OverlayBodyExampleModule],\n  exports: [OverlaySandboxComponent]\n})\nclass OverlaySandboxModule {}\n\n//////////////////////////////////////////////////\n\nexport default {\n  title: 'Examples/Overlay',\n  component: OverlaySandboxComponent,\n  decorators: [\n    moduleMetadata({\n      imports: [OverlayModule, PortalModule, OverlaySandboxModule]\n    })\n  ]\n} as Meta;\n\nconst Template: Story<OverlaySandboxComponent> = (args: OverlaySandboxComponent) => ({\n  component: OverlaySandboxComponent,\n  props: args\n});\n\nexport const Demo = Template.bind({});\nDemo.args = {};\n\n",
+            "assetsDirs": [],
+            "styleUrlsData": "",
+            "stylesData": "button {cursor:pointer;}\n",
+            "constructorObj": {
+                "name": "constructor",
+                "description": "",
+                "args": [
+                    {
+                        "name": "overlayService",
+                        "type": "NgxOverlayService"
+                    },
+                    {
+                        "name": "scrollStrategyOptions",
+                        "type": "ScrollStrategyOptions"
+                    },
+                    {
+                        "name": "overlayPositionBuilder",
+                        "type": "OverlayPositionBuilder"
+                    }
+                ],
+                "line": 43,
+                "jsdoctags": [
+                    {
+                        "name": "overlayService",
+                        "type": "NgxOverlayService",
+                        "tagName": {
+                            "text": "param"
+                        }
+                    },
+                    {
+                        "name": "scrollStrategyOptions",
+                        "type": "ScrollStrategyOptions",
+                        "tagName": {
+                            "text": "param"
+                        }
+                    },
+                    {
+                        "name": "overlayPositionBuilder",
+                        "type": "OverlayPositionBuilder",
+                        "tagName": {
+                            "text": "param"
+                        }
+                    }
+                ]
+            },
+            "implements": [
+                "OnDestroy"
+            ]
+        }
+    ],
+    "modules": [
+        {
+            "name": "OverlayBodyExampleModule",
+            "children": [
+                {
+                    "type": "providers",
+                    "elements": []
+                },
+                {
+                    "type": "declarations",
+                    "elements": [
+                        {
+                            "name": "OverlayBodyExampleComponent"
+                        }
+                    ]
+                },
+                {
+                    "type": "imports",
+                    "elements": []
+                },
+                {
+                    "type": "exports",
+                    "elements": [
+                        {
+                            "name": "OverlayBodyExampleComponent"
+                        }
+                    ]
+                },
+                {
+                    "type": "bootstrap",
+                    "elements": []
+                },
+                {
+                    "type": "classes",
+                    "elements": []
+                }
+            ]
+        },
+        {
+            "name": "OverlaySandboxModule",
+            "children": [
+                {
+                    "type": "providers",
+                    "elements": []
+                },
+                {
+                    "type": "declarations",
+                    "elements": [
+                        {
+                            "name": "OverlaySandboxComponent"
+                        }
+                    ]
+                },
+                {
+                    "type": "imports",
+                    "elements": [
+                        {
+                            "name": "OverlayBodyExampleModule"
+                        }
+                    ]
+                },
+                {
+                    "type": "exports",
+                    "elements": [
+                        {
+                            "name": "OverlaySandboxComponent"
+                        }
+                    ]
+                },
+                {
+                    "type": "bootstrap",
+                    "elements": []
+                },
+                {
+                    "type": "classes",
+                    "elements": []
+                }
+            ]
+        }
+    ],
+    "miscellaneous": {
+        "variables": [
+            {
+                "name": "context",
+                "ctype": "miscellaneous",
+                "subtype": "variable",
+                "file": "projects/ngx-overlay/src/test.ts",
+                "type": "",
+                "defaultValue": "require.context('./', true, /\\.spec\\.ts$/)"
+            },
+            {
+                "name": "Demo",
+                "ctype": "miscellaneous",
+                "subtype": "variable",
+                "file": "projects/ngx-overlay/src/stories/dialog.stories.ts",
+                "type": "",
+                "defaultValue": "Template.bind({})"
+            },
+            {
+                "name": "require",
+                "ctype": "miscellaneous",
+                "subtype": "variable",
+                "file": "projects/ngx-overlay/src/test.ts",
+                "type": "literal type"
+            },
+            {
+                "name": "Template",
+                "ctype": "miscellaneous",
+                "subtype": "variable",
+                "file": "projects/ngx-overlay/src/stories/dialog.stories.ts",
+                "type": "Story<OverlaySandboxComponent>",
+                "defaultValue": "(args: OverlaySandboxComponent) => ({\n  component: OverlaySandboxComponent,\n  props: args\n})"
+            }
+        ],
+        "functions": [],
+        "typealiases": [],
+        "enumerations": [],
+        "groupedVariables": {
+            "projects/ngx-overlay/src/test.ts": [
+                {
+                    "name": "context",
+                    "ctype": "miscellaneous",
+                    "subtype": "variable",
+                    "file": "projects/ngx-overlay/src/test.ts",
+                    "type": "",
+                    "defaultValue": "require.context('./', true, /\\.spec\\.ts$/)"
+                },
+                {
+                    "name": "require",
+                    "ctype": "miscellaneous",
+                    "subtype": "variable",
+                    "file": "projects/ngx-overlay/src/test.ts",
+                    "type": "literal type"
+                }
+            ],
+            "projects/ngx-overlay/src/stories/dialog.stories.ts": [
+                {
+                    "name": "Demo",
+                    "ctype": "miscellaneous",
+                    "subtype": "variable",
+                    "file": "projects/ngx-overlay/src/stories/dialog.stories.ts",
+                    "type": "",
+                    "defaultValue": "Template.bind({})"
+                },
+                {
+                    "name": "Template",
+                    "ctype": "miscellaneous",
+                    "subtype": "variable",
+                    "file": "projects/ngx-overlay/src/stories/dialog.stories.ts",
+                    "type": "Story<OverlaySandboxComponent>",
+                    "defaultValue": "(args: OverlaySandboxComponent) => ({\n  component: OverlaySandboxComponent,\n  props: args\n})"
+                }
+            ]
+        },
+        "groupedFunctions": {},
+        "groupedEnumerations": {},
+        "groupedTypeAliases": {}
+    },
+    "routes": [],
+    "coverage": {
+        "count": 4,
+        "status": "low",
+        "files": [
+            {
+                "filePath": "projects/ngx-overlay/src/lib/ngx-overlay.service.ts",
+                "type": "injectable",
+                "linktype": "injectable",
+                "name": "NgxOverlayService",
+                "coveragePercent": 36,
+                "coverageCount": "4/11",
+                "status": "medium"
+            },
+            {
+                "filePath": "projects/ngx-overlay/src/lib/ngx-overlay.service.ts",
+                "type": "interface",
+                "linktype": "interface",
+                "name": "OverlaySlot",
+                "coveragePercent": 0,
+                "coverageCount": "0/6",
+                "status": "low"
+            },
+            {
+                "filePath": "projects/ngx-overlay/src/stories/dialog.stories.ts",
+                "type": "component",
+                "linktype": "component",
+                "name": "OverlayBodyExampleComponent",
+                "coveragePercent": 0,
+                "coverageCount": "0/1",
+                "status": "low"
+            },
+            {
+                "filePath": "projects/ngx-overlay/src/stories/dialog.stories.ts",
+                "type": "component",
+                "linktype": "component",
+                "name": "OverlaySandboxComponent",
+                "coveragePercent": 0,
+                "coverageCount": "0/12",
+                "status": "low"
+            },
+            {
+                "filePath": "projects/ngx-overlay/src/stories/dialog.stories.ts",
+                "type": "variable",
+                "linktype": "miscellaneous",
+                "linksubtype": "variable",
+                "name": "Demo",
+                "coveragePercent": 0,
+                "coverageCount": "0/1",
+                "status": "low"
+            },
+            {
+                "filePath": "projects/ngx-overlay/src/stories/dialog.stories.ts",
+                "type": "variable",
+                "linktype": "miscellaneous",
+                "linksubtype": "variable",
+                "name": "Template",
+                "coveragePercent": 0,
+                "coverageCount": "0/1",
+                "status": "low"
+            },
+            {
+                "filePath": "projects/ngx-overlay/src/test.ts",
+                "type": "variable",
+                "linktype": "miscellaneous",
+                "linksubtype": "variable",
+                "name": "context",
+                "coveragePercent": 0,
+                "coverageCount": "0/1",
+                "status": "low"
+            },
+            {
+                "filePath": "projects/ngx-overlay/src/test.ts",
+                "type": "variable",
+                "linktype": "miscellaneous",
+                "linksubtype": "variable",
+                "name": "require",
+                "coveragePercent": 0,
+                "coverageCount": "0/1",
+                "status": "low"
+            }
+        ]
+    }
+}
