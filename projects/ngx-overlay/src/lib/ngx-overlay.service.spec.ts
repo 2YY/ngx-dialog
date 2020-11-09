@@ -2,8 +2,9 @@ import {async, ComponentFixture, TestBed} from '@angular/core/testing';
 
 import { NgxOverlayService } from './ngx-overlay.service';
 import { OverlayModule, OverlayPositionBuilder, ScrollStrategyOptions} from '@angular/cdk/overlay';
-import {Component, ElementRef, OnInit, TemplateRef, ViewChild, ViewContainerRef} from '@angular/core';
+import {Component, ElementRef, OnDestroy, OnInit, TemplateRef, ViewChild, ViewContainerRef} from '@angular/core';
 import {TemplatePortal} from '@angular/cdk/portal';
+import {Subscription} from 'rxjs';
 
 @Component({
   selector: 'lib-selector',
@@ -23,11 +24,13 @@ import {TemplatePortal} from '@angular/cdk/portal';
     }
   `]
 })
-export class ExampleComponent implements OnInit {
+export class ExampleComponent implements OnInit, OnDestroy {
   @ViewChild('buttonShowOverlay') buttonShowOverlayRef: ElementRef;
   @ViewChild('templateOverlay') templateOverlayRef: TemplateRef<any>;
 
   private overlaySlotId: string;
+  private backdropClickSubscription: Subscription | null = null;
+  private detachmentSubscription: Subscription | null = null;
 
   constructor(
     private scrollStrategyOptions: ScrollStrategyOptions,
@@ -44,6 +47,18 @@ export class ExampleComponent implements OnInit {
       positionStrategy: this.overlayPositionBuilder.global().centerHorizontally().centerVertically(),
       scrollStrategy: this.scrollStrategyOptions.close()
     });
+
+    this.backdropClickSubscription = this.overlayService.subscribeBackdropClick(this.overlaySlotId, () => this.onBackdropClick());
+    this.detachmentSubscription = this.overlayService.subscribeDetachment(this.overlaySlotId, () => this.onDetachment());
+  }
+
+  ngOnDestroy() {
+    if (this.detachmentSubscription !== null) {
+      this.detachmentSubscription.unsubscribe();
+    }
+    if (this.backdropClickSubscription !== null) {
+      this.backdropClickSubscription.unsubscribe();
+    }
   }
 
   showOverlay() {
@@ -61,6 +76,14 @@ export class ExampleComponent implements OnInit {
 
   destroyOverlay() {
     this.overlayService.removeOverlaySlot(this.overlaySlotId);
+  }
+
+  onBackdropClick() {
+    // noop
+  }
+
+  onDetachment() {
+    // noop
   }
 }
 
@@ -100,5 +123,84 @@ describe('NgxOverlayService', () => {
   it('overlay slot should be deleted', () => {
     component.destroyOverlay();
     expect(component.isShownOverlay()).toBeNull();
+  });
+
+  describe('can remove overlay slot', () => {
+    it ('should remove slot if closed overlay of the slot', () => {
+      expect(component.isShownOverlay()).toBeFalsy();
+
+      component.destroyOverlay();
+      fixture.detectChanges();
+
+      expect(component.isShownOverlay()).toBeFalsy();
+    });
+    it ('should remove slot if opened overlay of the slot', () => {
+      component.showOverlay();
+      fixture.detectChanges();
+      expect(component.isShownOverlay()).toBeTruthy();
+
+      component.destroyOverlay();
+      fixture.detectChanges();
+
+      expect(component.isShownOverlay()).toBeFalsy();
+    });
+  });
+
+  it('can subscribe backdrop click', () => {
+    const spy = spyOn(component, 'onBackdropClick');
+
+    component.showOverlay();
+    fixture.detectChanges();
+
+    const elBackdrop = fixture.elementRef.nativeElement.closest('body').querySelector('.cdk-overlay-backdrop');
+    expect(elBackdrop).toBeTruthy();
+
+    elBackdrop.click();
+    fixture.detectChanges();
+    expect(spy).toHaveBeenCalledTimes(1);
+  });
+
+  it('can subscribe detachment', () => {
+    const spy = spyOn(component, 'onDetachment');
+
+    component.showOverlay();
+    fixture.detectChanges();
+
+    component.hideOverlay();
+    fixture.detectChanges();
+
+    expect(spy).toHaveBeenCalledTimes(1);
+  });
+
+  describe('can open/close twice (should toggled flags correctly)', () => {
+    it('by directly using service method', () => {
+      component.showOverlay();
+      expect(component.isShownOverlay()).toBeTruthy();
+
+      component.hideOverlay();
+      expect(component.isShownOverlay()).toBeFalsy();
+
+      component.showOverlay();
+      expect(component.isShownOverlay()).toBeTruthy();
+
+      component.hideOverlay();
+      expect(component.isShownOverlay()).toBeFalsy();
+    });
+
+    it('close with backdrop clicking', () => {
+      const getElBackdrop = () => fixture.elementRef.nativeElement.closest('body').querySelector('.cdk-overlay-backdrop') ;
+
+      component.showOverlay();
+      expect(component.isShownOverlay()).toBeTruthy();
+
+      getElBackdrop().click();
+      expect(component.isShownOverlay()).toBeFalsy();
+
+      component.showOverlay();
+      expect(component.isShownOverlay()).toBeTruthy();
+
+      getElBackdrop().click();
+      expect(component.isShownOverlay()).toBeFalsy();
+    });
   });
 });

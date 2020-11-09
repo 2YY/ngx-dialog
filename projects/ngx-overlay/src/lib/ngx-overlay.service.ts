@@ -8,7 +8,6 @@ interface OverlaySlot {
   id: string;
   overlayRef: OverlayRef;
   backdropClickSubscription: Subscription;
-  detachmentSubscription: Subscription;
   isShown: boolean;
 }
 
@@ -27,21 +26,26 @@ export class NgxOverlayService {
    */
   addOverlaySlot(config: OverlayConfig): string {
     const overlayRef = this.overlay.create(config);
-    const hide = () => overlayRef.detach();
+    const id = uuid();
     const result: OverlaySlot = {
-      id: uuid(),
+      id,
       overlayRef,
-      backdropClickSubscription: overlayRef.backdropClick().subscribe(hide),
-      detachmentSubscription: overlayRef.detachments().subscribe(hide),
+      backdropClickSubscription: overlayRef.backdropClick().subscribe(() => this.hide(id)),
       isShown: false
     };
     this.slots.push(result);
-    return result.id;
+    return id;
   }
 
   removeOverlaySlot(overlaySlotId: string) {
     const slot = this.findSlot(overlaySlotId);
     if (slot) {
+      // NOTE: Before removing slot, close dialog of the slot if opened.
+      if (this.isShown(overlaySlotId)) {
+        this.hide(overlaySlotId);
+      }
+
+      // NOTE: Remove the slot.
       slot.backdropClickSubscription.unsubscribe();
       this.slots = this.slots.filter(v => v !== slot);
     }
@@ -49,7 +53,7 @@ export class NgxOverlayService {
 
   /**
    * Subscribe backdropClick of overlay on slot.
-   * @return subscription of backdropClick
+   * @return subscription of backdropClick (please use to unsubscribe)
    */
   subscribeBackdropClick(overlaySlotId: string, callback: () => any): Subscription | null {
     const slot = this.findSlot(overlaySlotId);
@@ -61,7 +65,7 @@ export class NgxOverlayService {
 
   /**
    * Subscribe detachment of overlay on slot.
-   * @return subscription of detachment
+   * @return subscription of detachment (please use to unsubscribe)
    */
   subscribeDetachment(overlaySlotId: string, callback: () => any): Subscription | null {
     const slot = this.findSlot(overlaySlotId);
