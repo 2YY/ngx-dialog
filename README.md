@@ -4,28 +4,28 @@
 [![Maintainability](https://api.codeclimate.com/v1/badges/c00046125264170a84e5/maintainability)](https://codeclimate.com/github/2YY/ngx-overlay/maintainability)
 [![Test Coverage](https://api.codeclimate.com/v1/badges/c00046125264170a84e5/test_coverage)](https://codeclimate.com/github/2YY/ngx-overlay/test_coverage)
 
-This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 8.3.24.
+## Installation
 
-## Development server
+`npm i 2yy-ngx-overlay`
 
-Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The app will automatically reload if you change any of the source files.
+## Motivation
 
-## Code scaffolding
+- To follow the DRY Principle when writing overlay showing/hiding logic.
+- Manage multiple overlay state in a screen.
 
-Run `ng generate component component-name` to generate a new component. You can also use `ng generate directive|pipe|service|class|guard|interface|enum|module`.
+## Usage
 
-## Build
+1. Create your overlay slot (with your overlay config)
+2. Attach your overlay to slot
 
-Run `ng build` to build the project. The build artifacts will be stored in the `dist/` directory. Use the `--prod` flag for a production build.
+### Create your overlay slot
 
-## Running unit tests
+`this.myOverlaySlotId = this.ngxOverlayService.addOverlaySlot(myOverlayConfig)`
 
-Run `ng test` to execute the unit tests via [Karma](https://karma-runner.github.io).
+### Attach your overlay to slot
 
-## Running end-to-end tests
+`this.ngxOverlayService.show(this.myPortal, this.myOverlaySlotId)`
 
-Run `ng e2e` to execute the end-to-end tests via [Protractor](http://www.protractortest.org/).
+## License
 
-## Further help
-
-To get more help on the Angular CLI use `ng help` or go check out the [Angular CLI README](https://github.com/angular/angular-cli/blob/master/README.md).
+[MIT License](./LICENSE)
