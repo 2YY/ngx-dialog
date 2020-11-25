@@ -2,7 +2,7 @@ name: Deploy
 
 on:
   workflow_run:
-    workflows: ["Test"]
+    workflows: ['Test']
     branches: [master]
     types:
       - completed
@@ -22,9 +22,9 @@ jobs:
           cache-name: cache-node-modules
         with:
           path: ~/.cache/yarn
-          key: ${{ runner.os }}-projectname-${{ hashFiles(format('{0}{1}', github.workspace, '/yarn.lock')) }}
+          key: ${{ runner.os }}-ngx-overlay-${{ hashFiles(format('{0}{1}', github.workspace, '/yarn.lock')) }}
           restore-keys: |
-            ${{ runner.os }}-projectname-
+            ${{ runner.os }}-ngx-overlay-
 
       - name: Install node modules
         if: steps.cache.outputs.cache-hit != 'true'
