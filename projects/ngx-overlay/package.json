@@ -3,6 +3,7 @@
   "version": "0.0.1",
   "homepage": "https://github.com/2YY/ngx-overlay",
   "repository": "https://github.com/2YY/ngx-overlay",
+  "license": "MIT",
   "dependencies": {
     "tslib": "^2.0.0"
   },

@@ -3,6 +3,7 @@
   "version": "0.0.0",
   "homepage": "https://github.com/2YY/ngx-overlay",
   "repository": "https://github.com/2YY/ngx-overlay",
+  "license": "MIT",
   "scripts": {
     "ng": "ng",
     "start": "ng serve",
