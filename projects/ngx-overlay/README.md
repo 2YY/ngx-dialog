@@ -1,24 +1,31 @@
 # NgxOverlay
 
-This library was generated with [Angular CLI](https://github.com/angular/angular-cli) version 9.0.7.
+![Test](https://github.com/2YY/ngx-overlay/workflows/Test/badge.svg)
+[![Maintainability](https://api.codeclimate.com/v1/badges/c00046125264170a84e5/maintainability)](https://codeclimate.com/github/2YY/ngx-overlay/maintainability)
+[![Test Coverage](https://api.codeclimate.com/v1/badges/c00046125264170a84e5/test_coverage)](https://codeclimate.com/github/2YY/ngx-overlay/test_coverage)
 
-## Code scaffolding
+## Installation
 
-Run `ng generate component component-name --project ngx-overlay` to generate a new component. You can also use `ng generate directive|pipe|service|class|guard|interface|enum|module --project ngx-overlay`.
-> Note: Don't forget to add `--project ngx-overlay` or else it will be added to the default project in your `angular.json` file. 
+`npm i 2yy-ngx-overlay`
 
-## Build
+## Motivation
 
-Run `ng build ngx-overlay` to build the project. The build artifacts will be stored in the `dist/` directory.
+- To follow the DRY Principle when writing overlay showing/hiding logic.
+- Manage multiple overlay state in a screen.
 
-## Publishing
+## Usage
 
-After building your library with `ng build ngx-overlay`, go to the dist folder `cd dist/ngx-overlay` and run `npm publish`.
+1. Create your overlay slot (with your overlay config)
+2. Attach your overlay to slot
 
-## Running unit tests
+### Create your overlay slot
 
-Run `ng test ngx-overlay` to execute the unit tests via [Karma](https://karma-runner.github.io).
+`this.myOverlaySlotId = this.ngxOverlayService.addOverlaySlot(myOverlayConfig)`
 
-## Further help
+### Attach your overlay to slot
 
-To get more help on the Angular CLI use `ng help` or go check out the [Angular CLI README](https://github.com/angular/angular-cli/blob/master/README.md).
+`this.ngxOverlayService.show(this.myPortal, this.myOverlaySlotId)`
+
+## License
+
+[MIT License](./LICENSE)
